@@ -137,58 +137,79 @@ window.addEventListener('scroll', function() {
 });
 
 // ===================================
-// Form Validation and Submission
+// Form Validation and Submission with FormSubmit
 // ===================================
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
+    // Set redirect URL to current page with success parameter
+    const redirectInput = contactForm.querySelector('input[name="_next"]');
+    if (redirectInput) {
+        const currentUrl = window.location.origin + window.location.pathname;
+        redirectInput.value = currentUrl + '?submitted=true#contact';
+    }
+    
+    // Check if form was just submitted successfully
+    if (window.location.search.includes('submitted=true')) {
+        setTimeout(() => {
+            showNotification('Thank you! Your inquiry has been submitted successfully. We will contact you soon.', 'success');
+            // Clean up URL after showing notification
+            const cleanUrl = window.location.origin + window.location.pathname + '#contact';
+            window.history.replaceState({}, document.title, cleanUrl);
+        }, 500);
+    }
+    
     contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
+        // Get form values for validation
         const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
             childAge: document.getElementById('child-age').value,
             course: document.getElementById('course').value,
-            message: document.getElementById('message').value
+            message: document.getElementById('message').value.trim()
         };
         
-        // Validate form
+        // Validate form - prevent submission if validation fails
         if (!formData.name || !formData.email || !formData.phone || !formData.childAge || !formData.course) {
+            e.preventDefault();
             showNotification('Please fill in all required fields', 'error');
-            return;
+            return false;
         }
         
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.email)) {
+            e.preventDefault();
             showNotification('Please enter a valid email address', 'error');
-            return;
+            return false;
         }
         
         // Phone validation (basic)
         const phoneRegex = /^[0-9+\-\s()]{10,}$/;
         if (!phoneRegex.test(formData.phone)) {
+            e.preventDefault();
             showNotification('Please enter a valid phone number', 'error');
-            return;
+            return false;
         }
         
         // Age validation
-        if (formData.childAge < 3 || formData.childAge > 18) {
+        const age = parseInt(formData.childAge);
+        if (isNaN(age) || age < 3 || age > 18) {
+            e.preventDefault();
             showNotification('Child age must be between 3 and 18 years', 'error');
-            return;
+            return false;
         }
         
-        // In a real application, you would send this data to a server
-        console.log('Form submitted:', formData);
+        // If validation passes, allow form to submit to FormSubmit
+        // Show loading state
+        const submitButton = contactForm.querySelector('.submit-button');
+        const originalText = submitButton.textContent;
+        submitButton.textContent = 'Sending...';
+        submitButton.disabled = true;
         
-        // Show success message
-        showNotification('Thank you! Your inquiry has been submitted. We will contact you soon.', 'success');
-        
-        // Reset form
-        contactForm.reset();
+        // Form will submit to FormSubmit automatically
+        // FormSubmit will redirect back to the page with success parameter
     });
 }
 
