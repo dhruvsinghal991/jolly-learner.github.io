@@ -290,206 +290,214 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 600px;
+    height: 600px;
 }
 
-/* Abacus Animation Styles */
-.abacus-container {
-    width: 100%;
-    max-width: 500px;
+/* Numbers Animation Styles */
+.numbers-animation {
+    width: 600px;
+    height: 600px;
+    position: relative;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    perspective: 1000px;
-}
-
-.abacus-frame {
-    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-    border-radius: var(--radius-xl);
     padding: 2rem;
-    box-shadow: var(--shadow-xl);
-    position: relative;
-    width: 100%;
-    max-width: 400px;
     animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0) rotateY(0deg); }
-    50% { transform: translateY(-20px) rotateY(5deg); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
 }
 
-.abacus-divider {
-    height: 4px;
-    background: rgba(255, 255, 255, 0.3);
-    margin: 1rem 0;
-    border-radius: 2px;
+.calculation-display {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    z-index: 2;
 }
 
-.abacus-rod {
-    position: relative;
-    height: 60px;
-    margin: 0.5rem 0;
+.calc-line {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    opacity: 0;
+    animation: fadeInCalc 0.8s ease forwards;
 }
 
-.abacus-rod::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.4);
-    z-index: 1;
+.calc-line-1 {
+    animation-delay: 0.2s;
 }
 
-.bead {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    position: absolute;
-    z-index: 2;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+.calc-line-2 {
+    animation-delay: 0.6s;
 }
 
-.bead::before {
-    content: '';
+.calc-line-3 {
+    animation-delay: 1s;
+}
+
+.calc-line-4 {
+    animation-delay: 1.4s;
+}
+
+@keyframes fadeInCalc {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.number {
+    color: var(--secondary-yellow);
+    text-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
+}
+
+.operator {
+    color: var(--white);
+    font-size: 2rem;
+    opacity: 0.9;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: inline-block;
+}
+
+.equals {
+    color: var(--white);
+    font-size: 2rem;
+    opacity: 0.9;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: inline-block;
+}
+
+.result {
+    color: var(--secondary-yellow);
+    text-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
+    font-size: 3rem;
+    animation: resultGlow 2s ease-in-out infinite;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes resultGlow {
+    0%, 100% { 
+        transform: scale(1);
+        text-shadow: 0 2px 8px rgba(251, 191, 36, 0.4);
+    }
+    50% { 
+        transform: scale(1.15);
+        text-shadow: 0 4px 16px rgba(251, 191, 36, 0.8);
+    }
+}
+
+.floating-numbers {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0.3));
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    pointer-events: none;
 }
 
-.upper-bead {
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+.float-num {
+    position: absolute;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.15);
+    animation: floatNumber 8s ease-in-out infinite;
 }
 
-.lower-bead {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Upper beads positioning and animation */
-.upper-bead.bead-1 {
-    left: 10%;
-    animation: moveBead1 3s ease-in-out infinite;
-}
-
-.upper-bead.bead-2 {
-    left: 25%;
-    animation: moveBead2 3.5s ease-in-out infinite;
-}
-
-.upper-bead.bead-3 {
-    left: 40%;
-    animation: moveBead3 4s ease-in-out infinite;
-}
-
-.upper-bead.bead-4 {
-    left: 55%;
-    animation: moveBead4 3.2s ease-in-out infinite;
-}
-
-.upper-bead.bead-5 {
-    left: 70%;
-    animation: moveBead5 3.8s ease-in-out infinite;
-}
-
-/* Lower beads positioning and animation */
-.lower-bead.bead-1 {
+.float-num-1 {
+    top: 10%;
     left: 15%;
-    animation: moveLowerBead1 2.8s ease-in-out infinite;
+    animation-delay: 0s;
 }
 
-.lower-bead.bead-2 {
-    left: 35%;
-    animation: moveLowerBead2 3.3s ease-in-out infinite;
+.float-num-2 {
+    top: 20%;
+    right: 20%;
+    animation-delay: 1s;
 }
 
-.lower-bead.bead-3 {
-    left: 55%;
-    animation: moveLowerBead3 3.7s ease-in-out infinite;
+.float-num-3 {
+    top: 40%;
+    left: 10%;
+    animation-delay: 2s;
 }
 
-.lower-bead.bead-4 {
-    left: 75%;
-    animation: moveLowerBead4 3.1s ease-in-out infinite;
+.float-num-4 {
+    top: 60%;
+    right: 15%;
+    animation-delay: 3s;
 }
 
-/* Upper beads animations - moving up and down */
-@keyframes moveBead1 {
-    0%, 100% { transform: translateY(0); }
-    25% { transform: translateY(-15px); }
-    50% { transform: translateY(0); }
-    75% { transform: translateY(15px); }
+.float-num-5 {
+    bottom: 20%;
+    left: 25%;
+    animation-delay: 4s;
 }
 
-@keyframes moveBead2 {
-    0%, 100% { transform: translateY(0); }
-    30% { transform: translateY(15px); }
-    60% { transform: translateY(-10px); }
-    90% { transform: translateY(0); }
+.float-num-6 {
+    bottom: 15%;
+    right: 25%;
+    animation-delay: 5s;
 }
 
-@keyframes moveBead3 {
-    0%, 100% { transform: translateY(0); }
-    20% { transform: translateY(-20px); }
-    40% { transform: translateY(10px); }
-    60% { transform: translateY(-5px); }
-    80% { transform: translateY(0); }
+.float-num-7 {
+    top: 30%;
+    left: 50%;
+    animation-delay: 6s;
 }
 
-@keyframes moveBead4 {
-    0%, 100% { transform: translateY(0); }
-    35% { transform: translateY(12px); }
-    70% { transform: translateY(-18px); }
+.float-num-8 {
+    bottom: 30%;
+    right: 10%;
+    animation-delay: 7s;
 }
 
-@keyframes moveBead5 {
-    0%, 100% { transform: translateY(0); }
-    25% { transform: translateY(20px); }
-    50% { transform: translateY(-8px); }
-    75% { transform: translateY(0); }
-}
-
-/* Lower beads animations - moving up and down */
-@keyframes moveLowerBead1 {
-    0%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-12px); }
-    80% { transform: translateY(0); }
-}
-
-@keyframes moveLowerBead2 {
-    0%, 100% { transform: translateY(0); }
-    30% { transform: translateY(18px); }
-    60% { transform: translateY(-10px); }
-}
-
-@keyframes moveLowerBead3 {
-    0%, 100% { transform: translateY(0); }
-    25% { transform: translateY(-15px); }
-    50% { transform: translateY(5px); }
-    75% { transform: translateY(0); }
-}
-
-@keyframes moveLowerBead4 {
-    0%, 100% { transform: translateY(0); }
-    35% { transform: translateY(14px); }
-    70% { transform: translateY(-12px); }
-}
-
-/* Hover effect on abacus */
-.abacus-frame:hover {
-    transform: scale(1.05);
-    transition: transform 0.3s ease;
-}
-
-.abacus-frame:hover .bead {
-    animation-duration: 1.5s;
+@keyframes floatNumber {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 0.15;
+    }
+    25% {
+        transform: translate(30px, -30px) rotate(90deg) scale(1.2);
+        opacity: 0.25;
+    }
+    50% {
+        transform: translate(-20px, 20px) rotate(180deg) scale(0.9);
+        opacity: 0.1;
+    }
+    75% {
+        transform: translate(20px, 30px) rotate(270deg) scale(1.1);
+        opacity: 0.2;
+    }
 }
 
 /* ===================================

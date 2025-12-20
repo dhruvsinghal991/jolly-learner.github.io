@@ -419,6 +419,117 @@ function createBackToTopButton() {
 document.addEventListener('DOMContentLoaded', createBackToTopButton);
 
 // ===================================
+// Dynamic Numbers Animation
+// ===================================
+function generateRandomCalculation(operation) {
+    let num1, num2, result, operator;
+    
+    switch(operation) {
+        case 'multiply':
+            num1 = Math.floor(Math.random() * 20) + 1;
+            num2 = Math.floor(Math.random() * 20) + 1;
+            result = num1 * num2;
+            operator = '×';
+            break;
+        case 'add':
+            num1 = Math.floor(Math.random() * 50) + 1;
+            num2 = Math.floor(Math.random() * 50) + 1;
+            result = num1 + num2;
+            operator = '+';
+            break;
+        case 'divide':
+            num2 = Math.floor(Math.random() * 12) + 2;
+            result = Math.floor(Math.random() * 20) + 1;
+            num1 = num2 * result;
+            operator = '÷';
+            break;
+        case 'subtract':
+            num1 = Math.floor(Math.random() * 50) + 20;
+            num2 = Math.floor(Math.random() * (num1 - 1)) + 1;
+            result = num1 - num2;
+            operator = '−';
+            break;
+    }
+    
+    return { num1, num2, result, operator };
+}
+
+function updateCalculation(calcLine, operation) {
+    const calc = generateRandomCalculation(operation);
+    const numberSpans = calcLine.querySelectorAll('.number');
+    const operatorSpan = calcLine.querySelector('.operator');
+    const resultSpan = calcLine.querySelector('.result');
+    
+    // Add fade out animation
+    calcLine.style.opacity = '0';
+    calcLine.style.transform = 'translateY(-10px)';
+    
+    setTimeout(() => {
+        // Update numbers
+        if (numberSpans.length >= 2) {
+            numberSpans[0].textContent = calc.num1;
+            numberSpans[1].textContent = calc.num2;
+        }
+        if (operatorSpan) {
+            operatorSpan.textContent = calc.operator;
+        }
+        if (resultSpan) {
+            resultSpan.textContent = calc.result;
+        }
+        
+        // Fade in with new numbers
+        calcLine.style.opacity = '1';
+        calcLine.style.transform = 'translateY(0)';
+    }, 300);
+}
+
+function initializeDynamicCalculations() {
+    const calcLine1 = document.querySelector('.calc-line-1');
+    const calcLine2 = document.querySelector('.calc-line-2');
+    const calcLine3 = document.querySelector('.calc-line-3');
+    const calcLine4 = document.querySelector('.calc-line-4');
+    
+    if (!calcLine1 || !calcLine2 || !calcLine3 || !calcLine4) return;
+    
+    // Add transition styles
+    [calcLine1, calcLine2, calcLine3, calcLine4].forEach(line => {
+        line.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    });
+    
+    // Array of calculations with their operations
+    const calculations = [
+        { element: calcLine1, operation: 'multiply' },
+        { element: calcLine2, operation: 'add' },
+        { element: calcLine3, operation: 'divide' },
+        { element: calcLine4, operation: 'subtract' }
+    ];
+    
+    let currentIndex = 0;
+    
+    // Function to update next calculation in cycle
+    function updateNextCalculation() {
+        const calc = calculations[currentIndex];
+        updateCalculation(calc.element, calc.operation);
+        
+        // Move to next calculation
+        currentIndex = (currentIndex + 1) % calculations.length;
+    }
+    
+    // Start updating after initial animations (2 seconds)
+    // Then update every 2 seconds, cycling through all calculations
+    setTimeout(() => {
+        updateNextCalculation();
+        setInterval(updateNextCalculation, 2000);
+    }, 2000);
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for initial animations to complete
+    setTimeout(initializeDynamicCalculations, 2000);
+});
+
+// ===================================
 // Console Welcome Message
 // ===================================
 console.log('%c Welcome to Institute of Jolly Learners! ', 
