@@ -555,6 +555,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         setError('courseInterest', fields.courseInterest ? '' : 'Please select a course.');
+        setError('locality', fields.locality ? '' : 'Please enter your locality.');
 
         return valid;
     }
@@ -567,6 +568,7 @@ document.addEventListener('DOMContentLoaded', function() {
             `*Child's Name:* ${fields.childName}`,
             `*Child's Age:* ${fields.childAge} years`,
             `*Course Interest:* ${fields.courseInterest}`,
+            `*Locality:* ${fields.locality}`,
         ];
 
         if (fields.message) {
@@ -589,6 +591,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 childName: sanitize(document.getElementById('childName').value),
                 childAge: sanitize(document.getElementById('childAge').value),
                 courseInterest: sanitize(document.getElementById('courseInterest').value),
+                locality: sanitize(document.getElementById('locality').value),
                 message: sanitize(document.getElementById('message').value),
             };
 
