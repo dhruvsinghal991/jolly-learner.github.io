@@ -475,6 +475,142 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ===================================
+// Enroll Modal
+// ===================================
+(function () {
+    var modal = null;
+    var lastFocused = null;
+
+    function getModal() {
+        if (!modal) modal = document.getElementById('enrollModal');
+        return modal;
+    }
+
+    window.openEnrollModal = function () {
+        var m = getModal();
+        if (!m) return;
+        lastFocused = document.activeElement;
+        m.removeAttribute('hidden');
+        document.body.style.overflow = 'hidden';
+        // Focus first input
+        var first = m.querySelector('input, select, textarea, button');
+        if (first) first.focus();
+    };
+
+    window.closeEnrollModal = function () {
+        var m = getModal();
+        if (!m) return;
+        m.setAttribute('hidden', '');
+        document.body.style.overflow = '';
+        if (lastFocused) lastFocused.focus();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var m = getModal();
+        if (!m) return;
+
+        // Close on overlay click (not box click)
+        m.addEventListener('click', function (e) {
+            if (e.target === m) closeEnrollModal();
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !m.hasAttribute('hidden')) closeEnrollModal();
+        });
+    });
+}());
+
+// ===================================
+// WhatsApp Inquiry Form
+// ===================================
+(function () {
+    const WHATSAPP_NUMBER = '919810531045'; // country code + number, no + or spaces
+
+    function sanitize(str) {
+        return String(str).trim().replace(/[<>"'`]/g, '');
+    }
+
+    function validateForm(fields) {
+        let valid = true;
+
+        function setError(id, msg) {
+            const el = document.getElementById(id + 'Error');
+            const input = document.getElementById(id);
+            if (el) el.textContent = msg;
+            if (input) input.classList.toggle('invalid', !!msg);
+            if (msg) valid = false;
+        }
+
+        setError('parentName', fields.parentName ? '' : 'Please enter your name.');
+        setError('childName', fields.childName ? '' : "Please enter your child's name.");
+
+        const age = parseInt(fields.childAge, 10);
+        if (!fields.childAge) {
+            setError('childAge', "Please enter your child's age.");
+        } else if (isNaN(age) || age < 3 || age > 18) {
+            setError('childAge', 'Age must be between 3 and 18.');
+        } else {
+            setError('childAge', '');
+        }
+
+        setError('courseInterest', fields.courseInterest ? '' : 'Please select a course.');
+
+        return valid;
+    }
+
+    function buildWhatsAppMessage(fields) {
+        const lines = [
+            'Hello! I found you through your website and I am interested in enrolling my child.',
+            '',
+            `*Parent Name:* ${fields.parentName}`,
+            `*Child's Name:* ${fields.childName}`,
+            `*Child's Age:* ${fields.childAge} years`,
+            `*Course Interest:* ${fields.courseInterest}`,
+        ];
+
+        if (fields.message) {
+            lines.push('', `*Message:* ${fields.message}`);
+        }
+
+        lines.push('', 'Kindly share batch timings and fees. Thank you!');
+        return lines.join('\n');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('whatsappForm');
+        if (!form) return;
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const fields = {
+                parentName: sanitize(document.getElementById('parentName').value),
+                childName: sanitize(document.getElementById('childName').value),
+                childAge: sanitize(document.getElementById('childAge').value),
+                courseInterest: sanitize(document.getElementById('courseInterest').value),
+                message: sanitize(document.getElementById('message').value),
+            };
+
+            if (!validateForm(fields)) return;
+
+            const text = buildWhatsAppMessage(fields);
+            const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
+            window.open(url, '_blank', 'noopener,noreferrer');
+        });
+
+        // Clear error on input
+        form.querySelectorAll('input, select, textarea').forEach(function (el) {
+            el.addEventListener('input', function () {
+                this.classList.remove('invalid');
+                const errEl = document.getElementById(this.id + 'Error');
+                if (errEl) errEl.textContent = '';
+            });
+        });
+    });
+}());
+
+// ===================================
 // Console Welcome Message
 // ===================================
 console.log('%c Welcome to Institute of Jolly Learners! ', 

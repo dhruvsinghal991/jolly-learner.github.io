@@ -66,7 +66,7 @@
                             <span>Brain Development</span>
                         </div> -->
                     </div>
-                    <button class="cta-button" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Enroll Now</button>
+                    <button class="cta-button" onclick="openEnrollModal()">Enroll Now</button>
                 </div>
                 <div class="hero-image">
                     <div class="numbers-animation">
@@ -456,7 +456,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="cta-button" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Enroll Your Child Today</button>
+                        <button class="cta-button" onclick="openEnrollModal()">Enroll Your Child Today</button>
                     </div>
                 </div>
             </div>
@@ -493,6 +493,7 @@
                         <p>Monday - Saturday: 9:00 AM - 7:00 PM<br>Sunday: Closed</p>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -539,6 +540,60 @@
             </div>
         </div>
     </footer>
+
+    <!-- Enroll Modal -->
+    <div id="enrollModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeEnrollModal()" aria-label="Close">&times;</button>
+            <div class="whatsapp-form-header">
+                <span class="whatsapp-icon">💬</span>
+                <div>
+                    <h3 id="modalTitle">Enquire via WhatsApp</h3>
+                    <p>Fill in the details and we'll open WhatsApp with your message pre-filled.</p>
+                </div>
+            </div>
+            <form id="whatsappForm" class="whatsapp-form" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="parentName">Your Name <span class="required">*</span></label>
+                        <input type="text" id="parentName" name="parentName" placeholder="e.g. Rahul Sharma" maxlength="60" required>
+                        <span class="field-error" id="parentNameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="childName">Child's Name <span class="required">*</span></label>
+                        <input type="text" id="childName" name="childName" placeholder="e.g. Aanya Sharma" maxlength="60" required>
+                        <span class="field-error" id="childNameError"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="childAge">Child's Age <span class="required">*</span></label>
+                        <input type="number" id="childAge" name="childAge" placeholder="e.g. 8" min="3" max="18" required>
+                        <span class="field-error" id="childAgeError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="courseInterest">Course Interest <span class="required">*</span></label>
+                        <select id="courseInterest" name="courseInterest" required>
+                            <option value="">Select a course</option>
+                            <option value="Abacus">Abacus</option>
+                            <option value="Vedic Maths">Vedic Maths</option>
+                            <option value="Handwriting">Handwriting</option>
+                            <option value="Not sure yet">Not sure yet</option>
+                        </select>
+                        <span class="field-error" id="courseInterestError"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message / Questions</label>
+                    <textarea id="message" name="message" rows="3" placeholder="Any specific questions or details you'd like to share..." maxlength="300"></textarea>
+                </div>
+                <button type="submit" class="whatsapp-submit-btn">
+                    <span class="btn-icon">📲</span>
+                    Open WhatsApp &amp; Send
+                </button>
+            </form>
+        </div>
+    </div>
 
     <script src="scripts/main.js"></script>
 </body>
