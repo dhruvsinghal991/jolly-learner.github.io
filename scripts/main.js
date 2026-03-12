@@ -522,6 +522,109 @@ document.addEventListener('DOMContentLoaded', function() {
 }());
 
 // ===================================
+// Franchise Modal
+// ===================================
+(function () {
+    var modal = null;
+    var lastFocused = null;
+
+    function getModal() {
+        if (!modal) modal = document.getElementById('franchiseModal');
+        return modal;
+    }
+
+    window.openFranchiseModal = function () {
+        var m = getModal();
+        if (!m) return;
+        lastFocused = document.activeElement;
+        m.removeAttribute('hidden');
+        document.body.style.overflow = 'hidden';
+        var first = m.querySelector('input, select, textarea, button');
+        if (first) first.focus();
+    };
+
+    window.closeFranchiseModal = function () {
+        var m = getModal();
+        if (!m) return;
+        m.setAttribute('hidden', '');
+        document.body.style.overflow = '';
+        if (lastFocused) lastFocused.focus();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var m = getModal();
+        if (!m) return;
+
+        m.addEventListener('click', function (e) {
+            if (e.target === m) closeFranchiseModal();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !m.hasAttribute('hidden')) closeFranchiseModal();
+        });
+
+        var form = document.getElementById('franchiseForm');
+        if (!form) return;
+
+        var WHATSAPP_NUMBER = '919810531045';
+
+        function sanitize(str) {
+            return String(str).trim().replace(/[<>"'`]/g, '');
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            var fields = {
+                name:       sanitize(document.getElementById('fName').value),
+                city:       sanitize(document.getElementById('fCity').value),
+                locality:   sanitize(document.getElementById('fLocality').value),
+                centreType: sanitize(document.getElementById('fCentreType').value),
+                message:    sanitize(document.getElementById('fMessage').value),
+            };
+
+            var valid = true;
+            function setError(id, msg) {
+                var el = document.getElementById(id + 'Error');
+                var input = document.getElementById(id);
+                if (el) el.textContent = msg;
+                if (input) input.classList.toggle('invalid', !!msg);
+                if (msg) valid = false;
+            }
+
+            setError('fName',       fields.name       ? '' : 'Please enter your name.');
+            setError('fCity',       fields.city       ? '' : 'Please enter your city.');
+            setError('fLocality',   fields.locality   ? '' : 'Please enter your locality.');
+            setError('fCentreType', fields.centreType ? '' : 'Please select a centre type.');
+
+            if (!valid) return;
+
+            var lines = [
+                'Hello! I am interested in opening a Jolly Learners franchise.',
+                '',
+                '*Name:* ' + fields.name,
+                '*City:* ' + fields.city,
+                '*Locality:* ' + fields.locality,
+                '*Centre Type:* ' + fields.centreType,
+            ];
+            if (fields.message) lines.push('', '*Details:* ' + fields.message);
+            lines.push('', 'Please share more information about the franchise opportunity. Thank you!');
+
+            var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n'));
+            window.open(url, '_blank', 'noopener,noreferrer');
+        });
+
+        form.querySelectorAll('input, select, textarea').forEach(function (el) {
+            el.addEventListener('input', function () {
+                this.classList.remove('invalid');
+                var errEl = document.getElementById(this.id + 'Error');
+                if (errEl) errEl.textContent = '';
+            });
+        });
+    });
+}());
+
+// ===================================
 // WhatsApp Inquiry Form
 // ===================================
 (function () {

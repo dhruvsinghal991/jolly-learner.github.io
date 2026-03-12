@@ -29,6 +29,7 @@
                     <li><a href="#courses">Courses</a></li>
                     <li><a href="#benefits">Benefits</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    <li><a href="#franchise" class="nav-franchise-link">Franchise</a></li>
                 </ul>
                 <button class="mobile-menu-toggle" id="mobileMenuToggle">
                     <span></span>
@@ -498,6 +499,65 @@
         </div>
     </section>
 
+    <!-- Franchise Section -->
+    <section id="franchise" class="franchise">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Own a Jolly Learners Franchise</h2>
+                <p class="section-subtitle">Bring quality skill education to your city — backed by a proven system</p>
+            </div>
+            <div class="franchise-content">
+                <div class="franchise-highlights">
+                    <div class="franchise-card">
+                        <div class="franchise-card-icon">🏫</div>
+                        <h4>Established Brand</h4>
+                        <p>10+ years of trust, 1000+ happy students, and a curriculum that delivers measurable results.</p>
+                    </div>
+                    <div class="franchise-card">
+                        <div class="franchise-card-icon">🛠️</div>
+                        <h4>Full Setup Support</h4>
+                        <p>We guide you from centre setup and staff training to marketing materials and admission process.</p>
+                    </div>
+                    <div class="franchise-card">
+                        <div class="franchise-card-icon">📦</div>
+                        <h4>Complete Kit Provided</h4>
+                        <p>Course material, abacus kits, workbooks, and digital resources — everything included.</p>
+                    </div>
+                    <div class="franchise-card">
+                        <div class="franchise-card-icon">📈</div>
+                        <h4>High ROI Potential</h4>
+                        <p>Low investment, recurring fee model, and strong demand for skill courses across India.</p>
+                    </div>
+                    <div class="franchise-card">
+                        <div class="franchise-card-icon">🎓</div>
+                        <h4>Ongoing Training</h4>
+                        <p>Regular instructor workshops, updated curriculum, and dedicated support from our team.</p>
+                    </div>
+                    <div class="franchise-card">
+                        <div class="franchise-card-icon">📍</div>
+                        <h4>Protected Territory</h4>
+                        <p>Exclusive area rights so your franchise operates without overlap from other centres.</p>
+                    </div>
+                </div>
+
+                <div class="franchise-cta-box">
+                    <div class="franchise-cta-text">
+                        <h3>Ready to Start Your Own Centre?</h3>
+                        <p>Fill in a quick form and our franchise team will connect with you on WhatsApp within 24 hours.</p>
+                        <ul class="franchise-checklist">
+                            <li><span class="check-icon">✓</span> No prior teaching experience required</li>
+                            <li><span class="check-icon">✓</span> Suitable for home-based or commercial centres</li>
+                            <li><span class="check-icon">✓</span> Flexible batch timings</li>
+                        </ul>
+                    </div>
+                    <button class="franchise-enquire-btn" onclick="openFranchiseModal()">
+                        <span>📲</span> Enquire About Franchise
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -591,6 +651,59 @@
                 <div class="form-group">
                     <label for="message">Your Message / Questions</label>
                     <textarea id="message" name="message" rows="2" placeholder="Any specific questions or details..." maxlength="300"></textarea>
+                </div>
+                <button type="submit" class="whatsapp-submit-btn">
+                    <span class="btn-icon">📲</span>
+                    Open WhatsApp &amp; Send
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Franchise Modal -->
+    <div id="franchiseModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="franchiseModalTitle" hidden>
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeFranchiseModal()" aria-label="Close">&times;</button>
+            <div class="whatsapp-form-header">
+                <span class="whatsapp-icon">🏫</span>
+                <div>
+                    <h3 id="franchiseModalTitle">Franchise Enquiry</h3>
+                    <p>We'll open WhatsApp with your details pre-filled.</p>
+                </div>
+            </div>
+            <form id="franchiseForm" class="whatsapp-form" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fName">Your Name <span class="required">*</span></label>
+                        <input type="text" id="fName" name="fName" placeholder="e.g. Priya Verma" maxlength="60" required>
+                        <span class="field-error" id="fNameError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fCity">City <span class="required">*</span></label>
+                        <input type="text" id="fCity" name="fCity" placeholder="e.g. Ghaziabad" maxlength="60" required>
+                        <span class="field-error" id="fCityError"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="fLocality">Locality / Area <span class="required">*</span></label>
+                        <input type="text" id="fLocality" name="fLocality" placeholder="e.g. Vaishali, Indirapuram" maxlength="80" required>
+                        <span class="field-error" id="fLocalityError"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="fCentreType">Centre Type <span class="required">*</span></label>
+                        <select id="fCentreType" name="fCentreType" required>
+                            <option value="">Select type</option>
+                            <option value="Home-based centre">Home-based centre</option>
+                            <option value="Commercial space">Commercial space</option>
+                            <option value="Not decided yet">Not decided yet</option>
+                        </select>
+                        <span class="field-error" id="fCentreTypeError"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fMessage">Additional Details</label>
+                    <textarea id="fMessage" name="fMessage" rows="2" placeholder="Any questions about investment, setup, or timelines..." maxlength="300"></textarea>
                 </div>
                 <button type="submit" class="whatsapp-submit-btn">
                     <span class="btn-icon">📲</span>

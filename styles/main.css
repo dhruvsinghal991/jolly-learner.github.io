@@ -181,6 +181,17 @@ section {
     background: var(--light-gray);
 }
 
+.nav-franchise-link {
+    background: var(--secondary-yellow) !important;
+    color: var(--dark-text) !important;
+    font-weight: 600 !important;
+    border-radius: var(--radius-md);
+}
+
+.nav-franchise-link:hover {
+    background: var(--secondary-yellow-dark) !important;
+}
+
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
@@ -986,6 +997,143 @@ section {
     text-decoration: underline;
 }
 
+
+/* ===================================
+   Franchise Section
+   =================================== */
+.franchise {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    color: var(--white);
+}
+
+.franchise .section-title {
+    color: var(--white);
+}
+
+.franchise .section-subtitle {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.franchise-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.franchise-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: var(--transition-base);
+}
+
+.franchise-card:hover {
+    background: rgba(255, 255, 255, 0.14);
+    transform: translateY(-4px);
+}
+
+.franchise-card-icon {
+    font-size: 2.25rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.franchise-card h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+    color: var(--secondary-yellow);
+}
+
+.franchise-card p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+.franchise-cta-box {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-xl);
+}
+
+.franchise-cta-text h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    color: var(--secondary-yellow);
+}
+
+.franchise-cta-text > p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: var(--spacing-md);
+}
+
+.franchise-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.franchise-checklist li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.franchise-enquire-btn {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: var(--secondary-yellow);
+    color: var(--dark-text);
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition-base);
+    box-shadow: var(--shadow-lg);
+}
+
+.franchise-enquire-btn:hover {
+    background: var(--secondary-yellow-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+}
+
+@media (max-width: 992px) {
+    .franchise-highlights {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .franchise-cta-box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .franchise-checklist li {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .franchise-highlights {
+        grid-template-columns: 1fr;
+    }
+}
 
 /* ===================================
    Enroll Modal
